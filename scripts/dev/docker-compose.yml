@@ -1,0 +1,19 @@
+version: '3'
+services:
+  postgres:
+    image: bitnami/postgresql:latest
+    environment:
+      - POSTGRESQL_USERNAME=user
+      - POSTGRESQL_PASSWORD=user-password
+      - POSTGRESQL_DATABASE=user-db
+      - POSTGRESQL_PORT_NUMBER=5434
+    ports:
+      - "5434:5434"
+
+  pg-up-checker:
+    image: oliosinter/ansible-probe:1.0.0
+    environment:
+      PROBE_HOST: postgres
+      PROBE_PORT: 5434
+      PROBE_TIMEOUT: 20
+    command: [ "probe.yml" ]
