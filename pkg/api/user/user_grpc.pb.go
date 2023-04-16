@@ -27,6 +27,7 @@ type UserRegistryClient interface {
 	UpdateUserContacts(ctx context.Context, in *UserContactsUpdateRequest, opts ...grpc.CallOption) (*UserContactsUpdateResponse, error)
 	GetUsers(ctx context.Context, in *UserGetRequest, opts ...grpc.CallOption) (*UserGetResponse, error)
 	GetUserByID(ctx context.Context, in *UserGetByIDRequest, opts ...grpc.CallOption) (*UserGetByIDResponse, error)
+	GetUserTotalSalary(ctx context.Context, in *UserGetTotalSalaryRequest, opts ...grpc.CallOption) (*UserGetTotalSalaryResponse, error)
 }
 
 type userRegistryClient struct {
@@ -82,6 +83,15 @@ func (c *userRegistryClient) GetUserByID(ctx context.Context, in *UserGetByIDReq
 	return out, nil
 }
 
+func (c *userRegistryClient) GetUserTotalSalary(ctx context.Context, in *UserGetTotalSalaryRequest, opts ...grpc.CallOption) (*UserGetTotalSalaryResponse, error) {
+	out := new(UserGetTotalSalaryResponse)
+	err := c.cc.Invoke(ctx, "/github.constantine27k.crnt_user_service.api.user.UserRegistry/GetUserTotalSalary", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserRegistryServer is the server API for UserRegistry service.
 // All implementations should embed UnimplementedUserRegistryServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type UserRegistryServer interface {
 	UpdateUserContacts(context.Context, *UserContactsUpdateRequest) (*UserContactsUpdateResponse, error)
 	GetUsers(context.Context, *UserGetRequest) (*UserGetResponse, error)
 	GetUserByID(context.Context, *UserGetByIDRequest) (*UserGetByIDResponse, error)
+	GetUserTotalSalary(context.Context, *UserGetTotalSalaryRequest) (*UserGetTotalSalaryResponse, error)
 }
 
 // UnimplementedUserRegistryServer should be embedded to have forward compatible implementations.
@@ -111,6 +122,9 @@ func (UnimplementedUserRegistryServer) GetUsers(context.Context, *UserGetRequest
 }
 func (UnimplementedUserRegistryServer) GetUserByID(context.Context, *UserGetByIDRequest) (*UserGetByIDResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserByID not implemented")
+}
+func (UnimplementedUserRegistryServer) GetUserTotalSalary(context.Context, *UserGetTotalSalaryRequest) (*UserGetTotalSalaryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserTotalSalary not implemented")
 }
 
 // UnsafeUserRegistryServer may be embedded to opt out of forward compatibility for this service.
@@ -214,6 +228,24 @@ func _UserRegistry_GetUserByID_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserRegistry_GetUserTotalSalary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserGetTotalSalaryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserRegistryServer).GetUserTotalSalary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/github.constantine27k.crnt_user_service.api.user.UserRegistry/GetUserTotalSalary",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserRegistryServer).GetUserTotalSalary(ctx, req.(*UserGetTotalSalaryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserRegistry_ServiceDesc is the grpc.ServiceDesc for UserRegistry service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -240,6 +272,10 @@ var UserRegistry_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserByID",
 			Handler:    _UserRegistry_GetUserByID_Handler,
+		},
+		{
+			MethodName: "GetUserTotalSalary",
+			Handler:    _UserRegistry_GetUserTotalSalary_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

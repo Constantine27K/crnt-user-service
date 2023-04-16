@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/Constantine27K/crnt-auth-service v0.0.0-20230415172717-f863e84fbb41
+	github.com/Constantine27K/crnt-data-manager v0.0.0-20230416155230-b2b83ccdc0c6
 	github.com/Constantine27K/crnt-sdk v0.0.0-20230415165645-1aaae78585ad
 	github.com/Masterminds/squirrel v1.5.4
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2
@@ -26,10 +27,10 @@ require (
 	github.com/lann/ps v0.0.0-20150810152359-62de8c46ede0 // indirect
 	github.com/o1egl/paseto v1.0.0 // indirect
 	github.com/pkg/errors v0.8.1 // indirect
-	go.uber.org/atomic v1.7.0 // indirect
-	go.uber.org/multierr v1.6.0 // indirect
-	golang.org/x/crypto v0.0.0-20181025213731-e84da0312774 // indirect
-	golang.org/x/net v0.8.0 // indirect
+	go.uber.org/atomic v1.10.0 // indirect
+	go.uber.org/multierr v1.9.0 // indirect
+	golang.org/x/crypto v0.8.0 // indirect
+	golang.org/x/net v0.9.0 // indirect
 	golang.org/x/sys v0.7.0 // indirect
-	golang.org/x/text v0.8.0 // indirect
+	golang.org/x/text v0.9.0 // indirect
 )

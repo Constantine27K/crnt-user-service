@@ -12,6 +12,7 @@ type UserStorage interface {
 	Add(user *desc.User, secretID int64) (int64, error)
 	Get(filter *models.UsersFilter) ([]*desc.User, error)
 	GetByID(id int64) (*desc.User, error)
+	GetUserToSalary() (map[string]float64, error)
 	Update(id int64, user *desc.User) (int64, error)
 	UpdateContacts(id int64, contacts *desc.Contacts) (int64, error)
 }
@@ -118,6 +119,10 @@ func (s *storage) GetByID(id int64) (*desc.User, error) {
 		Team:        row.Team,
 		Department:  row.Department,
 	}, nil
+}
+
+func (s *storage) GetUserToSalary() (map[string]float64, error) {
+	return s.gw.GetUserToSalary()
 }
 
 func (s *storage) Update(id int64, user *desc.User) (int64, error) {

@@ -16,6 +16,7 @@ type UsersGateway interface {
 	Add(user *models.UserRow, secretID int64) (int64, error)
 	Get(filter *models.UsersFilter) ([]*models.UserRow, error)
 	GetByID(id int64) (*models.UserRow, error)
+	GetUserToSalary() (map[string]float64, error)
 	Update(user *models.UserRow) (int64, error)
 	UpdateContacts(user *models.UserRow) (int64, error)
 }
@@ -481,4 +482,44 @@ func (g *gateway) UpdateContacts(user *models.UserRow) (int64, error) {
 	}
 
 	return user.ID, nil
+}
+
+func (g *gateway) GetUserToSalary() (map[string]float64, error) {
+	query := g.builder.Select("full_name", "salary").
+		From(tableUsers)
+
+	stmt, args, err := query.ToSql()
+	if err != nil {
+		log.Error("Gateway.GetUserToSalary query error",
+			zap.Error(err),
+		)
+		return nil, err
+	}
+
+	rows, err := g.db.Query(stmt, args...)
+	if err != nil {
+		log.Error("Gateway.GetUserToSalary query error",
+			zap.Error(err),
+		)
+		return nil, err
+	}
+	defer rows.Close()
+
+	result := make(map[string]float64)
+
+	for rows.Next() {
+		var fullName string
+		var salary float64
+		err = rows.Scan(&fullName, &salary)
+		if err != nil {
+			return nil, err
+		}
+		result[fullName] = salary
+	}
+
+	if rows.Err() != nil {
+		return nil, rows.Err()
+	}
+
+	return result, nil
 }

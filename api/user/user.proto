@@ -65,6 +65,11 @@ service UserRegistry {
 			get: "/v1/user/{id}"
 		};
 	};
+	rpc GetUserTotalSalary (UserGetTotalSalaryRequest) returns (UserGetTotalSalaryResponse) {
+		option (google.api.http) = {
+			get: "/v1/user/salary"
+		};
+	};
 }
 
 message User {
@@ -146,4 +151,12 @@ message UserGetByIDRequest {
 
 message UserGetByIDResponse {
 	User user = 1;
+}
+
+message UserGetTotalSalaryRequest {
+
+}
+
+message UserGetTotalSalaryResponse {
+	map<string, double> user_to_salary = 1;
 }
