@@ -12,7 +12,6 @@ type UserStorage interface {
 	Add(user *desc.User, secretID int64) (int64, error)
 	Get(filter *models.UsersFilter) ([]*desc.User, error)
 	GetByID(id int64) (*desc.User, error)
-	GetByLogin(login string) (*desc.User, error)
 	Update(id int64, user *desc.User) (int64, error)
 	UpdateContacts(id int64, contacts *desc.Contacts) (int64, error)
 }
@@ -32,6 +31,7 @@ func (s *storage) Add(user *desc.User, secretID int64) (int64, error) {
 		Name:        user.GetName(),
 		LastName:    user.GetLastName(),
 		DisplayName: user.GetDisplayName(),
+		FullName:    user.GetFullName(),
 		Birthday:    user.GetBirthday().AsTime(),
 		EmployedAt:  user.GetEmployedAt().AsTime(),
 		FiredAt:     user.GetFiredAt().AsTime(),
@@ -68,6 +68,7 @@ func (s *storage) Get(filter *models.UsersFilter) ([]*desc.User, error) {
 			Name:        row.Name,
 			LastName:    row.LastName,
 			DisplayName: row.DisplayName,
+			FullName:    row.FullName,
 			Birthday:    timestamppb.New(row.Birthday),
 			EmployedAt:  timestamppb.New(row.EmployedAt),
 			FiredAt:     timestamppb.New(row.FiredAt),
@@ -100,35 +101,7 @@ func (s *storage) GetByID(id int64) (*desc.User, error) {
 		Name:        row.Name,
 		LastName:    row.LastName,
 		DisplayName: row.DisplayName,
-		Birthday:    timestamppb.New(row.Birthday),
-		EmployedAt:  timestamppb.New(row.EmployedAt),
-		FiredAt:     timestamppb.New(row.FiredAt),
-		AboutInfo:   row.AboutInfo,
-		AvatarUrl:   row.AvatarUrl,
-		Contacts: &desc.Contacts{
-			PhoneNumber: row.PhoneNumber,
-			Email:       row.Email,
-			TelegramUrl: row.TelegramUrl,
-			DiscordUrl:  row.DiscordUrl,
-		},
-		Salary:      row.Salary,
-		IsPieceWage: row.IsPieceWage,
-		Team:        row.Team,
-		Department:  row.Department,
-	}, nil
-}
-
-func (s *storage) GetByLogin(login string) (*desc.User, error) {
-	row, err := s.gw.GetByLogin(login)
-	if err != nil {
-		return nil, err
-	}
-
-	return &desc.User{
-		Id:          row.ID,
-		Name:        row.Name,
-		LastName:    row.LastName,
-		DisplayName: row.DisplayName,
+		FullName:    row.FullName,
 		Birthday:    timestamppb.New(row.Birthday),
 		EmployedAt:  timestamppb.New(row.EmployedAt),
 		FiredAt:     timestamppb.New(row.FiredAt),
@@ -153,6 +126,7 @@ func (s *storage) Update(id int64, user *desc.User) (int64, error) {
 		Name:        user.GetName(),
 		LastName:    user.GetLastName(),
 		DisplayName: user.GetDisplayName(),
+		FullName:    user.GetFullName(),
 		Birthday:    user.GetBirthday().AsTime(),
 		EmployedAt:  user.GetEmployedAt().AsTime(),
 		FiredAt:     user.GetFiredAt().AsTime(),

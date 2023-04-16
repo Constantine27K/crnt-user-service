@@ -7,6 +7,7 @@ type UserRow struct {
 	Name        string    `db:"name"`
 	LastName    string    `db:"last_name"`
 	DisplayName string    `db:"display_name"`
+	FullName    string    `db:"full_name"`
 	Birthday    time.Time `db:"birthday"`
 	EmployedAt  time.Time `db:"employed_at"`
 	FiredAt     time.Time `db:"fired_at"`

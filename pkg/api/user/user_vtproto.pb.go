@@ -86,21 +86,21 @@ func (m *User) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= size
 		i = encodeVarint(dAtA, i, uint64(size))
 		i--
-		dAtA[i] = 0x52
+		dAtA[i] = 0x5a
 	}
 	if len(m.AvatarUrl) > 0 {
 		i -= len(m.AvatarUrl)
 		copy(dAtA[i:], m.AvatarUrl)
 		i = encodeVarint(dAtA, i, uint64(len(m.AvatarUrl)))
 		i--
-		dAtA[i] = 0x4a
+		dAtA[i] = 0x52
 	}
 	if len(m.AboutInfo) > 0 {
 		i -= len(m.AboutInfo)
 		copy(dAtA[i:], m.AboutInfo)
 		i = encodeVarint(dAtA, i, uint64(len(m.AboutInfo)))
 		i--
-		dAtA[i] = 0x42
+		dAtA[i] = 0x4a
 	}
 	if m.FiredAt != nil {
 		if marshalto, ok := interface{}(m.FiredAt).(interface {
@@ -122,7 +122,7 @@ func (m *User) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 			i = encodeVarint(dAtA, i, uint64(len(encoded)))
 		}
 		i--
-		dAtA[i] = 0x3a
+		dAtA[i] = 0x42
 	}
 	if m.EmployedAt != nil {
 		if marshalto, ok := interface{}(m.EmployedAt).(interface {
@@ -144,7 +144,7 @@ func (m *User) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 			i = encodeVarint(dAtA, i, uint64(len(encoded)))
 		}
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x3a
 	}
 	if m.Birthday != nil {
 		if marshalto, ok := interface{}(m.Birthday).(interface {
@@ -165,6 +165,13 @@ func (m *User) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 			copy(dAtA[i:], encoded)
 			i = encodeVarint(dAtA, i, uint64(len(encoded)))
 		}
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.FullName) > 0 {
+		i -= len(m.FullName)
+		copy(dAtA[i:], m.FullName)
+		i = encodeVarint(dAtA, i, uint64(len(m.FullName)))
 		i--
 		dAtA[i] = 0x2a
 	}
@@ -624,7 +631,7 @@ func (m *UserGetRequest) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		}
 		i = encodeVarint(dAtA, i, uint64(pksize2))
 		i--
-		dAtA[i] = 0x3a
+		dAtA[i] = 0x42
 	}
 	if len(m.Teams) > 0 {
 		var pksize4 int
@@ -645,43 +652,42 @@ func (m *UserGetRequest) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		}
 		i = encodeVarint(dAtA, i, uint64(pksize4))
 		i--
+		dAtA[i] = 0x3a
+	}
+	if len(m.Email) > 0 {
+		i -= len(m.Email)
+		copy(dAtA[i:], m.Email)
+		i = encodeVarint(dAtA, i, uint64(len(m.Email)))
+		i--
 		dAtA[i] = 0x32
 	}
-	if len(m.Emails) > 0 {
-		for iNdEx := len(m.Emails) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.Emails[iNdEx])
-			copy(dAtA[i:], m.Emails[iNdEx])
-			i = encodeVarint(dAtA, i, uint64(len(m.Emails[iNdEx])))
-			i--
-			dAtA[i] = 0x2a
-		}
+	if len(m.FullName) > 0 {
+		i -= len(m.FullName)
+		copy(dAtA[i:], m.FullName)
+		i = encodeVarint(dAtA, i, uint64(len(m.FullName)))
+		i--
+		dAtA[i] = 0x2a
 	}
-	if len(m.DisplayNames) > 0 {
-		for iNdEx := len(m.DisplayNames) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.DisplayNames[iNdEx])
-			copy(dAtA[i:], m.DisplayNames[iNdEx])
-			i = encodeVarint(dAtA, i, uint64(len(m.DisplayNames[iNdEx])))
-			i--
-			dAtA[i] = 0x22
-		}
+	if len(m.DisplayName) > 0 {
+		i -= len(m.DisplayName)
+		copy(dAtA[i:], m.DisplayName)
+		i = encodeVarint(dAtA, i, uint64(len(m.DisplayName)))
+		i--
+		dAtA[i] = 0x22
 	}
-	if len(m.LastNames) > 0 {
-		for iNdEx := len(m.LastNames) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.LastNames[iNdEx])
-			copy(dAtA[i:], m.LastNames[iNdEx])
-			i = encodeVarint(dAtA, i, uint64(len(m.LastNames[iNdEx])))
-			i--
-			dAtA[i] = 0x1a
-		}
+	if len(m.LastName) > 0 {
+		i -= len(m.LastName)
+		copy(dAtA[i:], m.LastName)
+		i = encodeVarint(dAtA, i, uint64(len(m.LastName)))
+		i--
+		dAtA[i] = 0x1a
 	}
 	if len(m.Names) > 0 {
-		for iNdEx := len(m.Names) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.Names[iNdEx])
-			copy(dAtA[i:], m.Names[iNdEx])
-			i = encodeVarint(dAtA, i, uint64(len(m.Names[iNdEx])))
-			i--
-			dAtA[i] = 0x12
-		}
+		i -= len(m.Names)
+		copy(dAtA[i:], m.Names)
+		i = encodeVarint(dAtA, i, uint64(len(m.Names)))
+		i--
+		dAtA[i] = 0x12
 	}
 	if len(m.Ids) > 0 {
 		var pksize6 int
@@ -833,89 +839,6 @@ func (m *UserGetByIDResponse) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *UserGetByLoginRequest) MarshalVT() (dAtA []byte, err error) {
-	if m == nil {
-		return nil, nil
-	}
-	size := m.SizeVT()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *UserGetByLoginRequest) MarshalToVT(dAtA []byte) (int, error) {
-	size := m.SizeVT()
-	return m.MarshalToSizedBufferVT(dAtA[:size])
-}
-
-func (m *UserGetByLoginRequest) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
-	if m == nil {
-		return 0, nil
-	}
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
-	}
-	if len(m.Login) > 0 {
-		i -= len(m.Login)
-		copy(dAtA[i:], m.Login)
-		i = encodeVarint(dAtA, i, uint64(len(m.Login)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *UserGetByLoginResponse) MarshalVT() (dAtA []byte, err error) {
-	if m == nil {
-		return nil, nil
-	}
-	size := m.SizeVT()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *UserGetByLoginResponse) MarshalToVT(dAtA []byte) (int, error) {
-	size := m.SizeVT()
-	return m.MarshalToSizedBufferVT(dAtA[:size])
-}
-
-func (m *UserGetByLoginResponse) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
-	if m == nil {
-		return 0, nil
-	}
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
-	}
-	if m.User != nil {
-		size, err := m.User.MarshalToSizedBufferVT(dAtA[:i])
-		if err != nil {
-			return 0, err
-		}
-		i -= size
-		i = encodeVarint(dAtA, i, uint64(size))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
 func encodeVarint(dAtA []byte, offset int, v uint64) int {
 	offset -= sov(v)
 	base := offset
@@ -945,6 +868,10 @@ func (m *User) SizeVT() (n int) {
 		n += 1 + l + sov(uint64(l))
 	}
 	l = len(m.DisplayName)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
+	l = len(m.FullName)
 	if l > 0 {
 		n += 1 + l + sov(uint64(l))
 	}
@@ -1176,29 +1103,25 @@ func (m *UserGetRequest) SizeVT() (n int) {
 		}
 		n += 1 + sov(uint64(l)) + l
 	}
-	if len(m.Names) > 0 {
-		for _, s := range m.Names {
-			l = len(s)
-			n += 1 + l + sov(uint64(l))
-		}
+	l = len(m.Names)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
 	}
-	if len(m.LastNames) > 0 {
-		for _, s := range m.LastNames {
-			l = len(s)
-			n += 1 + l + sov(uint64(l))
-		}
+	l = len(m.LastName)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
 	}
-	if len(m.DisplayNames) > 0 {
-		for _, s := range m.DisplayNames {
-			l = len(s)
-			n += 1 + l + sov(uint64(l))
-		}
+	l = len(m.DisplayName)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
 	}
-	if len(m.Emails) > 0 {
-		for _, s := range m.Emails {
-			l = len(s)
-			n += 1 + l + sov(uint64(l))
-		}
+	l = len(m.FullName)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
+	l = len(m.Email)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
 	}
 	if len(m.Teams) > 0 {
 		l = 0
@@ -1254,38 +1177,6 @@ func (m *UserGetByIDRequest) SizeVT() (n int) {
 }
 
 func (m *UserGetByIDResponse) SizeVT() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.User != nil {
-		l = m.User.SizeVT()
-		n += 1 + l + sov(uint64(l))
-	}
-	if m.unknownFields != nil {
-		n += len(m.unknownFields)
-	}
-	return n
-}
-
-func (m *UserGetByLoginRequest) SizeVT() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Login)
-	if l > 0 {
-		n += 1 + l + sov(uint64(l))
-	}
-	if m.unknownFields != nil {
-		n += len(m.unknownFields)
-	}
-	return n
-}
-
-func (m *UserGetByLoginResponse) SizeVT() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1453,6 +1344,38 @@ func (m *User) UnmarshalVT(dAtA []byte) error {
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FullName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.FullName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Birthday", wireType)
 			}
 			var msglen int
@@ -1495,7 +1418,7 @@ func (m *User) UnmarshalVT(dAtA []byte) error {
 				}
 			}
 			iNdEx = postIndex
-		case 6:
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field EmployedAt", wireType)
 			}
@@ -1539,7 +1462,7 @@ func (m *User) UnmarshalVT(dAtA []byte) error {
 				}
 			}
 			iNdEx = postIndex
-		case 7:
+		case 8:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field FiredAt", wireType)
 			}
@@ -1583,7 +1506,7 @@ func (m *User) UnmarshalVT(dAtA []byte) error {
 				}
 			}
 			iNdEx = postIndex
-		case 8:
+		case 9:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field AboutInfo", wireType)
 			}
@@ -1615,7 +1538,7 @@ func (m *User) UnmarshalVT(dAtA []byte) error {
 			}
 			m.AboutInfo = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 9:
+		case 10:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field AvatarUrl", wireType)
 			}
@@ -1647,7 +1570,7 @@ func (m *User) UnmarshalVT(dAtA []byte) error {
 			}
 			m.AvatarUrl = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 10:
+		case 11:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Contacts", wireType)
 			}
@@ -2780,11 +2703,11 @@ func (m *UserGetRequest) UnmarshalVT(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Names = append(m.Names, string(dAtA[iNdEx:postIndex]))
+			m.Names = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field LastNames", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field LastName", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2812,11 +2735,11 @@ func (m *UserGetRequest) UnmarshalVT(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.LastNames = append(m.LastNames, string(dAtA[iNdEx:postIndex]))
+			m.LastName = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DisplayNames", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DisplayName", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2844,11 +2767,11 @@ func (m *UserGetRequest) UnmarshalVT(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DisplayNames = append(m.DisplayNames, string(dAtA[iNdEx:postIndex]))
+			m.DisplayName = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Emails", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field FullName", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2876,9 +2799,41 @@ func (m *UserGetRequest) UnmarshalVT(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Emails = append(m.Emails, string(dAtA[iNdEx:postIndex]))
+			m.FullName = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Email", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Email = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
 			if wireType == 0 {
 				var v int64
 				for shift := uint(0); ; shift += 7 {
@@ -2954,7 +2909,7 @@ func (m *UserGetRequest) UnmarshalVT(dAtA []byte) error {
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field Teams", wireType)
 			}
-		case 7:
+		case 8:
 			if wireType == 0 {
 				var v int64
 				for shift := uint(0); ; shift += 7 {
@@ -3234,176 +3189,6 @@ func (m *UserGetByIDResponse) UnmarshalVT(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: UserGetByIDResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field User", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLength
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.User == nil {
-				m.User = &User{}
-			}
-			if err := m.User.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skip(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLength
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *UserGetByLoginRequest) UnmarshalVT(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: UserGetByLoginRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UserGetByLoginRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Login", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Login = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skip(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLength
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *UserGetByLoginResponse) UnmarshalVT(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: UserGetByLoginResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UserGetByLoginResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
