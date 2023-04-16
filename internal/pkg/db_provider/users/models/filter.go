@@ -6,24 +6,26 @@ import (
 )
 
 type UsersFilter struct {
-	IDs          []int64
-	Names        []string
-	LastNames    []string
-	DisplayNames []string
-	Emails       []string
-	Teams        []int64
-	Departments  []int64
+	IDs         []int64
+	Name        string
+	LastName    string
+	DisplayName string
+	FullName    string
+	Email       string
+	Teams       []int64
+	Departments []int64
 }
 
 func NewUsersFilter(req *desc.UserGetRequest) *UsersFilter {
 	return &UsersFilter{
-		IDs:          req.GetIds(),
-		Names:        req.GetNames(),
-		LastNames:    req.GetLastNames(),
-		DisplayNames: req.GetDisplayNames(),
-		Emails:       req.GetEmails(),
-		Teams:        req.GetTeams(),
-		Departments:  req.GetDepartments(),
+		IDs:         req.GetIds(),
+		Name:        req.GetNames(),
+		LastName:    req.GetLastName(),
+		DisplayName: req.GetDisplayName(),
+		FullName:    req.GetFullName(),
+		Email:       req.GetEmail(),
+		Teams:       req.GetTeams(),
+		Departments: req.GetDepartments(),
 	}
 }
 
@@ -34,27 +36,33 @@ func (f *UsersFilter) Apply(query sq.SelectBuilder) sq.SelectBuilder {
 		})
 	}
 
-	if len(f.Names) > 0 {
-		query = query.Where(sq.Eq{
-			"name": f.Names,
+	if len(f.Name) > 0 {
+		query = query.Where(sq.Like{
+			"name": f.Name,
 		})
 	}
 
-	if len(f.LastNames) > 0 {
-		query = query.Where(sq.Eq{
-			"last_name": f.LastNames,
+	if len(f.LastName) > 0 {
+		query = query.Where(sq.Like{
+			"last_name": f.LastName,
 		})
 	}
 
-	if len(f.DisplayNames) > 0 {
-		query = query.Where(sq.Eq{
-			"display_name": f.DisplayNames,
+	if len(f.DisplayName) > 0 {
+		query = query.Where(sq.Like{
+			"display_name": f.DisplayName,
 		})
 	}
 
-	if len(f.Emails) > 0 {
-		query = query.Where(sq.Eq{
-			"email": f.Emails,
+	if len(f.FullName) > 0 {
+		query = query.Where(sq.Like{
+			"full_name": f.FullName,
+		})
+	}
+
+	if len(f.Email) > 0 {
+		query = query.Where(sq.Like{
+			"email": f.Email,
 		})
 	}
 

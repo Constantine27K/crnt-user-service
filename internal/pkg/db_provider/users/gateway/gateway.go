@@ -16,7 +16,6 @@ type UsersGateway interface {
 	Add(user *models.UserRow, secretID int64) (int64, error)
 	Get(filter *models.UsersFilter) ([]*models.UserRow, error)
 	GetByID(id int64) (*models.UserRow, error)
-	GetByLogin(login string) (*models.UserRow, error)
 	Update(user *models.UserRow) (int64, error)
 	UpdateContacts(user *models.UserRow) (int64, error)
 }
@@ -39,7 +38,7 @@ const (
 )
 
 var (
-	columnsUsers = []string{"id", "name", "last_name", "display_name", "birthday",
+	columnsUsers = []string{"id", "name", "last_name", "display_name", "full_name", "birthday",
 		"employed_at", "fired_at", "about_info", "avatar_url", "contacts_id",
 		"salary", "is_piece_wage", "team", "department", "secrets_id"}
 
@@ -74,7 +73,7 @@ func (g *gateway) Add(user *models.UserRow, secretID int64) (int64, error) {
 	}
 
 	values = []interface{}{
-		user.Name, user.LastName, user.DisplayName, user.Birthday, user.EmployedAt, user.FiredAt,
+		user.Name, user.LastName, user.DisplayName, user.FullName, user.Birthday, user.EmployedAt, user.FiredAt,
 		user.AboutInfo, user.AvatarUrl, idContact, user.Salary, user.IsPieceWage, user.Team, user.Department, secretID,
 	}
 
@@ -147,6 +146,7 @@ func (g *gateway) Get(filter *models.UsersFilter) ([]*models.UserRow, error) {
 			&userRow.Name,
 			&userRow.LastName,
 			&userRow.DisplayName,
+			&userRow.FullName,
 			&userRow.Birthday,
 			&userRow.EmployedAt,
 			&userRow.FiredAt,
@@ -242,6 +242,7 @@ func (g *gateway) GetByID(id int64) (*models.UserRow, error) {
 		&userRow.Name,
 		&userRow.LastName,
 		&userRow.DisplayName,
+		&userRow.FullName,
 		&userRow.Birthday,
 		&userRow.EmployedAt,
 		&userRow.FiredAt,
@@ -283,76 +284,6 @@ func (g *gateway) GetByID(id int64) (*models.UserRow, error) {
 	if err != nil {
 		log.Error("Gateway.GetByID query error",
 			zap.Any("id", id),
-			zap.Error(err),
-		)
-		return nil, err
-	}
-
-	return &userRow, nil
-}
-
-func (g *gateway) GetByLogin(login string) (*models.UserRow, error) {
-	query := g.builder.Select(columnsUsers[:len(columnsUsers)-1]...).
-		From(tableUsers).
-		Where(sq.Eq{"display_name": login})
-
-	stmt, args, err := query.ToSql()
-	if err != nil {
-		log.Error("Gateway.GetByLogin query error",
-			zap.Any("display_name", login),
-			zap.Error(err),
-		)
-		return nil, err
-	}
-
-	var userRow models.UserRow
-	var contact int64
-	err = g.db.QueryRow(stmt, args...).Scan(
-		&userRow.ID,
-		&userRow.Name,
-		&userRow.LastName,
-		&userRow.DisplayName,
-		&userRow.Birthday,
-		&userRow.EmployedAt,
-		&userRow.FiredAt,
-		&userRow.AboutInfo,
-		&userRow.AvatarUrl,
-		&contact,
-		&userRow.Salary,
-		&userRow.IsPieceWage,
-		&userRow.Team,
-		&userRow.Department,
-	)
-	if err != nil {
-		log.Error("Gateway.GetByLogin query error",
-			zap.Any("display_name", login),
-			zap.Error(err),
-		)
-		return nil, err
-	}
-
-	query = g.builder.Select(columnsContacts[1:]...).
-		From(tableContacts).
-		Where(sq.Eq{"id": contact})
-
-	stmt, args, err = query.ToSql()
-	if err != nil {
-		log.Error("Gateway.GetByLogin query error",
-			zap.Any("display_name", login),
-			zap.Error(err),
-		)
-		return nil, err
-	}
-
-	err = g.db.QueryRow(stmt, args...).Scan(
-		&userRow.PhoneNumber,
-		&userRow.Email,
-		&userRow.TelegramUrl,
-		&userRow.DiscordUrl,
-	)
-	if err != nil {
-		log.Error("Gateway.GetByID query error",
-			zap.Any("display_name", login),
 			zap.Error(err),
 		)
 		return nil, err
@@ -375,6 +306,10 @@ func (g *gateway) Update(user *models.UserRow) (int64, error) {
 
 	if len(user.DisplayName) > 0 {
 		query = query.Set("display_name", user.DisplayName)
+	}
+
+	if len(user.FullName) > 0 {
+		query = query.Set("full_name", user.FullName)
 	}
 
 	if user.Birthday.Unix() != 0 {

@@ -168,36 +168,6 @@
         ]
       }
     },
-    "/v1/user/{login}": {
-      "get": {
-        "operationId": "UserRegistry_GetUserByLogin",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/userUserGetByLoginResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "login",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "UserRegistry"
-        ]
-      }
-    },
     "/v1/users": {
       "get": {
         "operationId": "UserRegistry_GetUsers",
@@ -231,41 +201,31 @@
             "name": "names",
             "in": "query",
             "required": false,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "multi"
+            "type": "string"
           },
           {
-            "name": "lastNames",
+            "name": "lastName",
             "in": "query",
             "required": false,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "multi"
+            "type": "string"
           },
           {
-            "name": "displayNames",
+            "name": "displayName",
             "in": "query",
             "required": false,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "multi"
+            "type": "string"
           },
           {
-            "name": "emails",
+            "name": "fullName",
             "in": "query",
             "required": false,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "multi"
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "required": false,
+            "type": "string"
           },
           {
             "name": "teams",
@@ -371,6 +331,9 @@
         "displayName": {
           "type": "string"
         },
+        "fullName": {
+          "type": "string"
+        },
         "birthday": {
           "type": "string",
           "format": "date-time"
@@ -439,14 +402,6 @@
       }
     },
     "userUserGetByIDResponse": {
-      "type": "object",
-      "properties": {
-        "user": {
-          "$ref": "#/definitions/userUser"
-        }
-      }
-    },
-    "userUserGetByLoginResponse": {
       "type": "object",
       "properties": {
         "user": {

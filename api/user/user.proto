@@ -65,11 +65,6 @@ service UserRegistry {
 			get: "/v1/user/{id}"
 		};
 	};
-	rpc GetUserByLogin (UserGetByLoginRequest) returns (UserGetByLoginResponse) {
-		option (google.api.http) = {
-			get: "/v1/user/{login}"
-		};
-	};
 }
 
 message User {
@@ -77,12 +72,13 @@ message User {
 	string name = 2;
 	string last_name = 3;
 	string display_name = 4;
-	google.protobuf.Timestamp birthday = 5;
-	google.protobuf.Timestamp employed_at = 6;
-	google.protobuf.Timestamp fired_at = 7;
-	string about_info = 8;
-	string avatar_url = 9;
-	Contacts contacts = 10;
+	string full_name = 5;
+	google.protobuf.Timestamp birthday = 6;
+	google.protobuf.Timestamp employed_at = 7;
+	google.protobuf.Timestamp fired_at = 8;
+	string about_info = 9;
+	string avatar_url = 10;
+	Contacts contacts = 11;
 	double salary = 12;
 	bool is_piece_wage = 13;
 	int64 team = 14;
@@ -131,12 +127,13 @@ message UserContactsUpdateResponse {
 
 message UserGetRequest {
 	repeated int64 ids = 1;
-	repeated string names = 2;
-	repeated string last_names = 3;
-	repeated string display_names = 4;
-	repeated string emails = 5;
-	repeated int64 teams = 6;
-	repeated int64 departments = 7;
+	string names = 2;
+	string last_name = 3;
+	string display_name = 4;
+	string full_name = 5;
+	string email = 6;
+	repeated int64 teams = 7;
+	repeated int64 departments = 8;
 }
 
 message UserGetResponse {
@@ -148,13 +145,5 @@ message UserGetByIDRequest {
 }
 
 message UserGetByIDResponse {
-	User user = 1;
-}
-
-message UserGetByLoginRequest {
-	string login = 1;
-}
-
-message UserGetByLoginResponse {
 	User user = 1;
 }
