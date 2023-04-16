@@ -51,6 +51,28 @@
         ]
       }
     },
+    "/v1/user/salary": {
+      "get": {
+        "operationId": "UserRegistry_GetUserTotalSalary",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userUserGetTotalSalaryResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "UserRegistry"
+        ]
+      }
+    },
     "/v1/user/{id}": {
       "get": {
         "operationId": "UserRegistry_GetUserByID",
@@ -416,6 +438,18 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/userUser"
+          }
+        }
+      }
+    },
+    "userUserGetTotalSalaryResponse": {
+      "type": "object",
+      "properties": {
+        "userToSalary": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "format": "double"
           }
         }
       }

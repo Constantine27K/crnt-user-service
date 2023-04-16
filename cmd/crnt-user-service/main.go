@@ -15,6 +15,7 @@ import (
 	users_storage "github.com/Constantine27K/crnt-user-service/internal/pkg/db_provider/users/storage"
 	"github.com/Constantine27K/crnt-user-service/internal/pkg/infrastructure/postgres"
 	auth_service "github.com/Constantine27K/crnt-user-service/internal/pkg/services/crnt-auth-service"
+	dataManager "github.com/Constantine27K/crnt-user-service/internal/pkg/services/crnt-data-manager"
 	"github.com/Constantine27K/crnt-user-service/internal/pkg/validation"
 	"github.com/Constantine27K/crnt-user-service/pkg/api/user"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
@@ -95,7 +96,17 @@ func createGrpcServer() {
 
 	authService := auth_service.NewService(connAuthService)
 
-	user.RegisterUserRegistryServer(grpcServer, user_service.NewService(userStorage, authService, validator, authorizer))
+	connDataMangerService, err := grpc.Dial(
+		os.Getenv("DATA_MANAGER_SERVICE_ADDRESS"),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	)
+	if err != nil {
+		log.Fatalf("cannot dial auth-service: %v", err)
+	}
+
+	dataManagerService := dataManager.NewService(connDataMangerService)
+
+	user.RegisterUserRegistryServer(grpcServer, user_service.NewService(userStorage, authService, dataManagerService, validator, authorizer))
 	log.Infof("grpc service started on port %s", port)
 
 	err = grpcServer.Serve(lis)
